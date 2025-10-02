@@ -4,8 +4,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Todo = require("./models/Todo");
 
-const port = 3000;
-const dbUrl = "mongodb://127.0.0.1:27017/todo";
+const PORT = 3000;
+const DBURL = "mongodb://127.0.0.1:27017/todo";
 
 app.use(express.json());
 app.use(cors());
@@ -13,7 +13,7 @@ app.use(cors());
 // Connct with db
 const connectDB = async () => {
   try {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(DBURL);
     console.log("Success connect with db");
   } catch (error) {
     console.error("Failed connect with db:", error);
@@ -105,6 +105,6 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
-app.listen(port, (_) => {
-  console.log(`Listening in port http://localhost:${port}`);
+app.listen(PORT, (_) => {
+  console.log(`Listening in port http://localhost:${PORT}`);
 });
