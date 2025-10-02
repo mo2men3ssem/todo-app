@@ -60,15 +60,20 @@ app.get("/todos/:id", async (req, res) => {
 
 // Create Todo
 app.post("/todos", async (req, res) => {
-  const payload = {
-    title: req.body.title,
-    description: req.body.description,
-    completed: req.body.completed,
-  };
   try {
+    const payload = {
+      title: req.body.title,
+      description: req.body.description,
+      completed: req.body.completed || false,
+    };
+    if (!payload.title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
     const newTodo = await Todo.create(payload);
-    newTodo.save();
-    res.json({ message: "Success added todo", newTodo });
+    res.status(201).json({
+      message: "Todo created successfully",
+      newTodo,
+    });
   } catch (error) {
     console.log("Error while added todo:", error);
     res.status(500).json({ message: "Error added todo", error });
@@ -77,15 +82,21 @@ app.post("/todos", async (req, res) => {
 
 // Update Todo
 app.put("/todos/:id", async (req, res) => {
-  const payload = {
-    title: req.body.title,
-    description: req.body.description,
-    completed: req.body.completed,
-  };
   try {
     const id = req.params.id;
-    const updatedTodo = await Todo.findByIdAndUpdate(id, payload);
-    updatedTodo.save();
+    const payload = {
+      title: req.body.title,
+      description: req.body.description,
+      completed: req.body.completed,
+    };
+    const updatedTodo = await Todo.findByIdAndUpdate(id, payload, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedTodo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
     res.json({ message: "Success updated todo", updatedTodo });
   } catch (error) {
     console.log("Error while updated todo:", error);
@@ -98,7 +109,12 @@ app.delete("/todos/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const deletedTodo = await Todo.findByIdAndDelete(id);
-    res.json({ message: "Success deleted todo", id });
+
+    if (!deletedTodo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+
+    res.json({ message: "Success deleted todo", deletedTodo });
   } catch (error) {
     console.log("Error while deleted todo:", error);
     res.status(500).json({ message: "Error deleted todo", error });
