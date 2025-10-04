@@ -1,1 +1,32 @@
-<p>todo-box works!</p>
+<div class="todos">
+  <h3>{{ todos.length == 1 ? "todo" : "todo's" }} ({{ todos.length }})</h3>
+  <div class="__row__" *ngFor="let todo of todos">
+    <div class="box">
+      <h2
+        class="title"
+        [style]="
+          todo.completed == false ? '' : 'text-decoration: line-through;'
+        "
+      >
+        {{ todo.title }}
+      </h2>
+      <p class="description">{{ todo.description }}</p>
+      <div class="completed-btn">
+        <input
+          type="checkbox"
+          class="status"
+          id="status"
+          [checked]="todo.completed"
+        />
+      </div>
+    </div>
+    <div class="action-btns">
+      <button [routerLink]="`/todo-edit/${todo._id}`">
+        <i class="fa-solid fa-pen" style="color: #ffffff"></i>
+      </button>
+      <button (click)="deleteTodo(todo._id)">
+        <i class="fa-solid fa-trash" style="color: #ffffff"></i>
+      </button>
+    </div>
+  </div>
+</div>

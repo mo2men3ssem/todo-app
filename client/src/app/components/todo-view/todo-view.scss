@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin-top: 25px;
+  position: relative;
+}
+
+button.add-btn {
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 50px;
+  position: fixed;
+  right: 200px;
+  bottom: 50px;
+  border: none;
+  background-color: #ff5d5d;
+  color: #fff;
+  box-shadow: 0 4px 8px 0 #0000002f;
+}
+
+button.add-btn:hover {
+  filter: brightness(95%);
+  cursor: pointer;
+}
