@@ -21,12 +21,7 @@ It allows users to create, update, delete, and manage daily tasks easily.
 
 | Layer | Technology |
 |--------|-------------|
-| **Frontend** | Angular 17+ |
+| **Frontend** | Angular 20 |
 | **Backend** | Node.js + Express.js |
 | **Database** | MongoDB |
-| **Styling** | Angular Material / CSS / Tailwind (update if applicable) |
-
----
-
-## 📂 Project Structure
 
